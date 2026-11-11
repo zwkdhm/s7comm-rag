@@ -2,57 +2,45 @@
 data/s7comm-gpt2/
 data/s7comm-gpt2-real/
 
-# pdf and thesis exports
 *.pdf
 thesis/
 thesis_new/
 
-# python caches
 __pycache__/
 *.pyc
 *.pyo
 
-# logs and temp
 .tmp/
 *.log
 
-# os
 .DS_Store
 
 # ================================
 
-# docs
 *.md
 !README.md
 
-# data
 data/
 
-# thesis translations
 thesis_en/
 
-# backups and sensitive files
 *.bak
 *.txt
 !requirements.txt
 
-# experiment, eval and test scripts
 experiments/
 analysis/
 
-# reviewer response materials
 r1c5_experiments/
 reviewer1_experiments/
 r1c5_*.py
 r1c5_*.sh
 
-# generated output
 results/
 logs/
 *_results.json
 merged_*.json
 
-# scripts outside core framework
 generate_*.py
 convert_*.py
 merge_*.py
