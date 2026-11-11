@@ -13,7 +13,7 @@ Tier 3 — Semantic search   (vector similarity over symbol descriptions)
 Tier 4 — LLM inference     (time-series statistics + domain knowledge RAG)
 ```
 
-Tiers 3 and 4 include two multi-hop retrieval strategies for cases where the decisive knowledge is not in a single document:
+Tiers 3 and 4 include two multi-hop retrieval strategies:
 
 - **Pointer-following**: bridges an explicit cross-reference code to a role document
 - **Entity-graph**: resolves ambiguous signals via device/tank membership context
@@ -21,21 +21,20 @@ Tiers 3 and 4 include two multi-hop retrieval strategies for cases where the dec
 ## Repository Structure
 
 ```
-s7comm_rag/          # core package (parser, knowledge base, translator)
-knowledge_base.py    # four-tier KB with confidence scoring
-calibration.py       # cross-tier confidence calibration (isotonic regression)
-entity_graph.py      # entity-relation multi-hop retrieval
-weak_supervision.py  # Tier-4 statistical inference (zero symbol table)
-tier4_llm_inference.py      # LLM inference via Ollama (Qwen2.5)
-tier4_llm_inference_lite.py # lightweight variant
-demo.py              # end-to-end demo
-data/
-  symbols.csv              # minimal demo symbol table
-  synthetic/               # synthetic S7Comm pcaps (boiler, pressure, fault)
-  synthetic_real/          # zinc-hydrometallurgy scenario pcaps
-  vector_kb/               # pre-built vector knowledge base (Chroma)
-  vector_kb_multihop/      # pointer-following multi-hop KB
-  vector_kb_entity/        # entity-graph multi-hop KB
+s7comm_rag/              # core package
+  knowledge.py           # four-tier KB with confidence scoring
+  parser.py              # S7Comm packet parsing
+  translator.py          # address-to-description translation
+knowledge_base.py        # standalone KB entry point
+s7comm_parser.py         # pcap parsing utilities
+calibration.py           # cross-tier confidence calibration
+entity_graph.py          # entity-relation multi-hop retrieval
+weak_supervision.py      # zero-symbol-table statistical features
+tier4_llm_inference.py   # LLM inference via Ollama
+tier4_llm_inference_lite.py  # lightweight rule-based fallback
+translator.py            # top-level translator
+demo.py                  # end-to-end demo
+calibration.json         # pre-fitted calibration table
 ```
 
 ## Requirements
@@ -55,7 +54,7 @@ Install dependencies:
 pip install scapy pandas chromadb sentence-transformers
 ```
 
-For Tier 4 inference, install [Ollama](https://ollama.ai) and pull the model:
+For Tier 4 inference, install [Ollama](https://ollama.ai) and pull a model:
 
 ```bash
 ollama pull qwen2.5:7b
@@ -64,24 +63,10 @@ ollama pull qwen2.5:7b
 ## Quick Start
 
 ```bash
-# Run the end-to-end demo on a synthetic pcap
 python demo.py
 ```
 
 The demo parses a synthetic S7Comm capture, looks up each address through the four-tier chain, and prints the inferred semantic description alongside the confidence score.
-
-## Experiments
-
-The main evaluation scripts are:
-
-| Script | Description |
-|---|---|
-| `eval_with_rag.py` | RAG paradigm comparison (Naïve / Advanced / Graph / Agentic) |
-| `eval_degradation.py` | Symbol-table robustness under progressive coverage loss |
-| `multihop_eval.py` | Pointer-following multi-hop disambiguation |
-| `entity_eval.py` | Entity-graph multi-hop disambiguation |
-| `eval_weak_supervision.py` | Zero-symbol-table inference (Tier 4 only) |
-| `ablation_proper.py` | Ablation: remove innovations one by one |
 
 ## Configuration
 
@@ -91,7 +76,11 @@ Tier 4 LLM inference reads the Ollama endpoint from the environment:
 export OLLAMA_HOST=http://localhost:11434
 ```
 
-API keys for any external LLM service should be set via environment variable; see the top of `tier4_llm_inference.py` for the expected variable name.
+The calibration table path can be overridden:
+
+```bash
+export CALIB_PATH=/path/to/calibration.json
+```
 
 ## License
 
