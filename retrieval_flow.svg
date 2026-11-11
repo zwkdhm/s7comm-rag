@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="700" viewBox="0 0 1040 700" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0f766e"/>
+    </marker>
+  </defs>
+
+  <style>
+    .box  { fill:#f8fafc; stroke:#334155; stroke-width:2; }
+    .db   { fill:#eef2ff; stroke:#4338ca; stroke-width:2; }
+    .dia  { fill:#fff7ed; stroke:#c2410c; stroke-width:2; }
+    .term { fill:#ecfdf5; stroke:#0f766e; stroke-width:2; }
+    .lbl  { font-size:14px; fill:#0f172a; }
+    .lblb { font-size:15px; fill:#0f172a; font-weight:bold; }
+    .edge { stroke:#334155; stroke-width:2; fill:none; }
+    .edgeG{ stroke:#0f766e; stroke-width:2; fill:none; }
+    .etag { font-size:12px; fill:#475569; }
+    .etagG{ font-size:12px; fill:#0f766e; font-weight:bold; }
+    .yn   { font-size:12px; fill:#c2410c; font-weight:bold; }
+  </style>
+
+  <!-- Query -->
+  <rect class="box" x="40" y="50" width="150" height="52" rx="8"/>
+  <text class="lblb" x="115" y="82" text-anchor="middle">Query</text>
+
+  <!-- ChromaDB (single store, right side, tall) -->
+  <rect class="db" x="820" y="40" width="180" height="150" rx="12"/>
+  <text class="lblb" x="910" y="86" text-anchor="middle">ChromaDB</text>
+  <text class="lbl"  x="910" y="108" text-anchor="middle" font-size="12" fill="#4338ca">single vector store</text>
+  <line x1="840" y1="120" x2="980" y2="120" stroke="#c7d2fe" stroke-width="1"/>
+  <text class="lbl"  x="910" y="140" text-anchor="middle" font-size="11" fill="#475569">top &#9679; query()  vector</text>
+  <text class="lbl"  x="910" y="160" text-anchor="middle" font-size="11" fill="#475569">bot &#9679; get($contains)</text>
+
+  <!-- hop-1 : query -> chromadb top -->
+  <path class="edge" d="M190,76 L818,76" marker-end="url(#arr)"/>
+  <text class="etag" x="500" y="66" text-anchor="middle">hop-1 : vector query</text>
+
+  <!-- hop-1 docs: chromadb -> down -> first diamond -->
+  <path class="edge" d="M910,190 L910,215 L500,215 L500,250" marker-end="url(#arr)"/>
+  <text class="etag" x="700" y="207" text-anchor="middle">hop-1 top-3 docs</text>
+
+  <!-- Diamond 1 -->
+  <polygon class="dia" points="500,250 620,305 500,360 380,305"/>
+  <text class="lblb" x="500" y="301" text-anchor="middle">Ref-code</text>
+  <text class="lblb" x="500" y="320" text-anchor="middle">found?</text>
+
+  <!-- D1 Yes -> Pointer -->
+  <path class="edgeG" d="M620,305 L700,305" marker-end="url(#arrG)"/>
+  <text class="yn" x="660" y="296" text-anchor="middle">Yes</text>
+  <rect class="term" x="700" y="278" width="210" height="54" rx="8"/>
+  <text class="lblb" x="805" y="302" text-anchor="middle" fill="#0f766e">Pointer hop-2</text>
+  <text class="lbl"  x="805" y="320" text-anchor="middle" font-size="11" fill="#0f766e">key = ref-code</text>
+
+  <!-- D1 No -> D2 -->
+  <path class="edge" d="M500,360 L500,400" marker-end="url(#arr)"/>
+  <text class="yn" x="516" y="384" text-anchor="middle" fill="#334155">No</text>
+
+  <!-- Diamond 2 -->
+  <polygon class="dia" points="500,400 620,455 500,510 380,455"/>
+  <text class="lblb" x="500" y="451" text-anchor="middle">Tank ID</text>
+  <text class="lblb" x="500" y="470" text-anchor="middle">found?</text>
+
+  <!-- D2 Yes -> Entity -->
+  <path class="edgeG" d="M620,455 L700,455" marker-end="url(#arrG)"/>
+  <text class="yn" x="660" y="446" text-anchor="middle">Yes</text>
+  <rect class="term" x="700" y="428" width="210" height="54" rx="8"/>
+  <text class="lblb" x="805" y="452" text-anchor="middle" fill="#0f766e">Entity hop-2</text>
+  <text class="lbl"  x="805" y="470" text-anchor="middle" font-size="11" fill="#0f766e">key = tank-id</text>
+
+  <!-- D2 No -> Single -->
+  <path class="edge" d="M500,510 L500,550" marker-end="url(#arr)"/>
+  <text class="yn" x="516" y="534" text-anchor="middle" fill="#334155">No</text>
+  <rect class="box" x="395" y="550" width="210" height="54" rx="8"/>
+  <text class="lblb" x="500" y="574" text-anchor="middle">Single</text>
+  <text class="lbl"  x="500" y="592" text-anchor="middle" font-size="11" fill="#475569">hop-1 only, no 2nd hop</text>
+
+  <!-- hop-2 : Pointer & Entity -> back to ChromaDB bottom (exact) -->
+  <path class="edgeG" d="M910,278 L910,192" marker-end="url(#arrG)"/>
+  <path class="edgeG" d="M910,428 C960,400 960,230 942,192" marker-end="url(#arrG)"/>
+  <text class="etagG" x="922" y="235" text-anchor="start">hop-2</text>
+  <text class="etagG" x="922" y="250" text-anchor="start">$contains</text>
+
+  <!-- Merge + LLM -->
+  <rect class="box" x="700" y="560" width="240" height="70" rx="8"/>
+  <text class="lblb" x="820" y="588" text-anchor="middle">Merge + dedup</text>
+  <text class="lbl"  x="820" y="610" text-anchor="middle" font-size="12" fill="#475569">context &#8594; LLM inference</text>
+
+  <!-- Pointer / Entity / Single -> Merge -->
+  <path class="edge" d="M805,332 L805,558" marker-end="url(#arr)"/>
+  <path class="edge" d="M850,482 L845,558" marker-end="url(#arr)"/>
+  <path class="edge" d="M605,585 L698,591" marker-end="url(#arr)"/>
+
+  <!-- caption -->
+  <text x="40" y="668" font-size="12.5" fill="#64748b">Tier 4 retrieval &#8212; one ChromaDB, two access modes: vector (hop-1) then exact $contains (hop-2).</text>
+  <text x="40" y="686" font-size="12.5" fill="#64748b">Cascaded rule picks the hop-2 key: reference code (Pointer) &#8594; tank identity (Entity) &#8594; else Single.</text>
+</svg>
