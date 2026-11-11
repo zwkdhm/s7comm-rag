@@ -55,8 +55,17 @@ thesis_en/
 审稿意见.txt
 实验提示词.md
 
-# --- 数据生成脚本（非核心框架）---
-generate_*.py
+# --- 评估、实验、测试脚本（非核心框架）---
+eval_*.py
+ablation_*.py
+entity_build_kb.py
+entity_eval.py
+entity_generate.py
+multihop_build_kb.py
+multihop_eval.py
+multihop_generate.py
+run_exp3_trace.py
+test_*.py
 convert_dcs_table.py
 merge_datasets.py
 finetune_gpt2.py
