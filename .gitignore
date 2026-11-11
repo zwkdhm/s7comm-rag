@@ -1,46 +1,65 @@
-# --- large model weights (GPT-2 checkpoints, ~93G) ---
+# large model weights
 data/s7comm-gpt2/
 data/s7comm-gpt2-real/
 
-# --- PDFs (copyrighted zinc-metallurgy papers + thesis exports, large) ---
+# pdf and thesis exports
 *.pdf
 thesis/
 thesis_new/
 
-# --- python caches ---
+# python caches
 __pycache__/
 *.pyc
 *.pyo
 
-# --- scratch / run logs ---
+# logs and temp
 .tmp/
 *.log
 
-# --- OS cruft ---
+# os
 .DS_Store
 
-# ================================================================
-# GitHub open-source release: entries below this line
-# ================================================================
+# ================================
 
-# --- 内部文档不开源 ---
+# docs
 *.md
 !README.md
 
-# --- 所有数据文件不开源 ---
+# data
 data/
 
-# --- thesis_en 不上传 ---
+# thesis translations
 thesis_en/
 
-# --- 二进制备份 ---
+# backups and sensitive files
 *.bak
-
-# --- 保密文件 ---
 *.txt
 !requirements.txt
 
-# --- 实验脚本不开源（核心框架以外）---
+# experiment, eval and test scripts
+experiments/
+analysis/
+
+# reviewer response materials
+r1c5_experiments/
+reviewer1_experiments/
+r1c5_*.py
+r1c5_*.sh
+
+# generated output
+results/
+logs/
+*_results.json
+merged_*.json
+
+# scripts outside core framework
+generate_*.py
+convert_*.py
+merge_*.py
+finetune_*.py
+build_thesis_kb.py
+translate_thesis.py
+process_labels.py
 eval_*.py
 ablation_*.py
 test_*.py
@@ -49,30 +68,3 @@ test_*.py
 *_generate.py
 run_*.py
 run_*.sh
-
-# --- 审稿人响应实验 ---
-r1c5_*.py
-r1c5_*.sh
-r1c5_experiments/
-reviewer1_experiments/
-
-# --- 方差分析与调试工具（统一放在 analysis/ 目录中）---
-analysis/
-
-# --- 数据生成与转换脚本 ---
-generate_*.py
-convert_*.py
-merge_*.py
-finetune_*.py
-build_thesis_kb.py
-translate_thesis.py
-process_labels.py
-
-# --- 中间结果 JSON ---
-*_results.json
-merged_*.json
-*_results.log
-
-# --- 临时运行目录 ---
-results/
-logs/
