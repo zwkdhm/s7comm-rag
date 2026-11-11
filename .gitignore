@@ -23,26 +23,11 @@ __pycache__/
 # GitHub open-source release: entries below this line
 # ================================================================
 
-# --- 内部过程文档和论文章节（仅保留 README.md）---
-ABSTRACT.md
-EXPERIMENT.md
-EXPERIMENT_RESULTS.md
-INNOVATIONS.md
-INTRODUCTION.md
-METHOD.md
-MULTIHOP_POINTER_MOTIVATION.md
-RELATED_WORK.md
-CONCLUSION.md
-REVISIONS.md
-HOW_TO_CHECK_VARIANCE.md
-MERGED_EXPERIMENT_RESULTS.md
-UPDATE_SUMMARY.md
-VARIANCE_COMPLETE_REPORT.md
-r1c5.md
-variance_analysis_final.md
-variance_analysis_preliminary.md
+# --- 内部文档不开源 ---
+*.md
+!README.md
 
-# --- 所有数据文件不开源（用户自行生成或获取）---
+# --- 所有数据文件不开源 ---
 data/
 
 # --- thesis_en 不上传 ---
@@ -52,62 +37,42 @@ thesis_en/
 *.bak
 
 # --- 保密文件 ---
-审稿意见.txt
-实验提示词.md
+*.txt
+!requirements.txt
 
-# --- 评估、实验、测试脚本（非核心框架）---
+# --- 实验脚本不开源（核心框架以外）---
 eval_*.py
 ablation_*.py
-entity_build_kb.py
-entity_eval.py
-entity_generate.py
-multihop_build_kb.py
-multihop_eval.py
-multihop_generate.py
-run_exp3_trace.py
 test_*.py
-convert_dcs_table.py
-merge_datasets.py
-finetune_gpt2.py
+*_build_kb.py
+*_eval.py
+*_generate.py
+run_*.py
+run_*.sh
+
+# --- 审稿人响应实验 ---
+r1c5_*.py
+r1c5_*.sh
+r1c5_experiments/
+reviewer1_experiments/
+
+# --- 方差分析与调试工具（统一放在 analysis/ 目录中）---
+analysis/
+
+# --- 数据生成与转换脚本 ---
+generate_*.py
+convert_*.py
+merge_*.py
+finetune_*.py
 build_thesis_kb.py
 translate_thesis.py
 process_labels.py
 
-# --- 审稿人响应实验 ---
-r1c5_*.py
-r1c5_run_all.sh
-r1c5_experiments/
-reviewer1_experiments/
-
-# --- 方差分析与调试工具 ---
-analyze_variance.py
-check_*.py
-compare_layouts.py
-_rerun_innov6.py
-eval_all_tiers_variance.py
-eval_calibration_cv.py
-eval_calibration_stability.py
-eval_coupled_signals.py
-eval_degradation_variance.py
-eval_merged_*.py
-eval_process_*.py
-plot_fig7_calibration_stability.py
-run_variance_analysis.sh
-run_process_context.sh
-check_progress.sh
-
 # --- 中间结果 JSON ---
 *_results.json
 merged_*.json
-coupled_signals_results.json
-process_context_results.json
-variance_results*.json
+*_results.log
 
 # --- 临时运行目录 ---
 results/
 logs/
-data/merged/
-data/merged_scattered/
-data/process_coupled/
-data/vector_kb_entity_r1c5/
-data/vector_kb_multihop_r1c5/
